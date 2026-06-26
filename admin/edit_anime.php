@@ -14,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $cover = trim($_POST['cover'] ?? '');
     $genres = $_POST['genres'] ?? [];
 
-    // Validation checks
     if ($anime_id <= 0) {
         echo "Error: Invalid or missing Anime ID.";
         exit;
