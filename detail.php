@@ -1,7 +1,5 @@
 <?php
-// 1. Include your database connection
 include './connection/connection.php';
-// 2. Validate and get the anime ID from the URL string
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     header("Location: index.php");
     exit();
@@ -10,7 +8,6 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 $anime_id = intval($_GET['id']);
 
 try {
-    // 3. Fetch the specific anime details
     $stmt = $pdo->prepare("SELECT * FROM anime WHERE id = :id");
     $stmt->execute([':id' => $anime_id]);
     $anime = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -19,7 +16,6 @@ try {
         die("<div class='container my-5 text-white'>Anime profile entry not found.</div>");
     }
 
-    // 4. Fetch assigned genres for this anime
     $genre_stmt = $pdo->prepare("
         SELECT g.name
         FROM genres g
@@ -32,7 +28,6 @@ try {
     die("Database Error: " . $e->getMessage());
 }
 
-// Calculations for calculations & fallbacks
 $current = (int)$anime['current_episode'];
 $total = (int)$anime['total_episodes'];
 $progress_percent = ($total > 0) ? ($current / $total) * 100 : 0;
@@ -51,21 +46,21 @@ $rating_val = !empty($anime['my_rating']) ? (float)$anime['my_rating'] : 0.0;
     <link href="./assets/css/extra.css" rel="stylesheet">
     <title><?= htmlspecialchars($anime['title']); ?> - Details</title>
     <style>
-    .detail-banner {
-        background: linear-gradient(180deg, rgba(26, 29, 32, 0.4) 0%, rgba(26, 29, 32, 0.95) 100%),
-            url('<?= !empty($anime['cover']) ? htmlspecialchars($anime['cover']) : "./assets/img/default-cover.jpg"; ?>');
-        background-size: cover;
-        background-position: center;
-        min-height: 380px;
-    }
+        .detail-banner {
+            background: linear-gradient(180deg, rgba(26, 29, 32, 0.4) 0%, rgba(26, 29, 32, 0.95) 100%),
+                url('<?= !empty($anime['cover']) ? htmlspecialchars($anime['cover']) : "./assets/img/default-cover.jpg"; ?>');
+            background-size: cover;
+            background-position: center;
+            min-height: 380px;
+        }
 
-    .poster-img {
-        margin-top: -180px;
-        border: 4px solid #FFD700;
-        border-radius: 8px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-        max-width: 100%;
-    }
+        .poster-img {
+            margin-top: -180px;
+            border: 4px solid #FFD700;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            max-width: 100%;
+        }
     </style>
 </head>
 
@@ -132,13 +127,13 @@ $rating_val = !empty($anime['my_rating']) ? (float)$anime['my_rating'] : 0.0;
                     <h3 class="h4 text-warning border-bottom border-secondary pb-2 mb-3">Genres</h3>
                     <div class="d-flex flex-wrap gap-2">
                         <?php if (!empty($genres)): ?>
-                        <?php foreach ($genres as $g): ?>
-                        <span class="badge border border-secondary px-3 py-2 fs-6 bg-dark text-light rounded-pill">
-                            <?= htmlspecialchars($g); ?>
-                        </span>
-                        <?php endforeach; ?>
+                            <?php foreach ($genres as $g): ?>
+                                <span class="badge border border-secondary px-3 py-2 fs-6 bg-dark text-light rounded-pill">
+                                    <?= htmlspecialchars($g); ?>
+                                </span>
+                            <?php endforeach; ?>
                         <?php else: ?>
-                        <span class="text-muted">No genres selected for this title.</span>
+                            <span class="text-muted">No genres selected for this title.</span>
                         <?php endif; ?>
                     </div>
                 </div>

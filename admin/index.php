@@ -63,23 +63,23 @@ include '../connection/connection.php';
                             } else {
                                 while ($anime = $stmt->fetch()) {
                     ?>
-                    <div
-                        class="d-flex align-items-center justify-content-between p-3 border-bottom border-secondary hover-row transition">
-                        <div class="d-flex align-items-center flex-grow-1" style="width: 35%;">
-                            <div class="rounded bg-secondary me-3 d-flex align-items-center justify-content-center overflow-hidden shadow"
-                                style="width: 50px; height: 70px; flex-shrink: 0;">
-                                <?php if (!empty($anime['cover'])) : ?>
-                                <img src="<?php echo htmlspecialchars($anime['cover']); ?>" alt="Anime Cover"
-                                    class="img-fluid">
-                                <?php else : ?>
-                                <i class="fas fa-image text-dark fa-lg"></i>
-                                <?php endif ?>
-                            </div>
-                            <div>
-                                <h6 class="mb-1 fw-bold text-white"><?php echo htmlspecialchars($anime['title']); ?>
-                                </h6>
-                                <div class="d-flex flex-wrap gap-1">
-                                    <?php
+                                    <div
+                                        class="d-flex align-items-center justify-content-between p-3 border-bottom border-secondary hover-row transition">
+                                        <div class="d-flex align-items-center flex-grow-1" style="width: 35%;">
+                                            <div class="rounded bg-secondary me-3 d-flex align-items-center justify-content-center overflow-hidden shadow"
+                                                style="width: 50px; height: 70px; flex-shrink: 0;">
+                                                <?php if (!empty($anime['cover'])) : ?>
+                                                    <img src="<?php echo htmlspecialchars($anime['cover']); ?>" alt="Anime Cover"
+                                                        class="img-fluid">
+                                                <?php else : ?>
+                                                    <i class="fas fa-image text-dark fa-lg"></i>
+                                                <?php endif ?>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-1 fw-bold text-white"><?php echo htmlspecialchars($anime['title']); ?>
+                                                </h6>
+                                                <div class="d-flex flex-wrap gap-1">
+                                                    <?php
                                                     if (!empty($anime['genres'])) {
                                                         $genreList = explode(',', $anime['genres']);
                                                         foreach ($genreList as $genre) {
@@ -89,55 +89,55 @@ include '../connection/connection.php';
                                                         echo '<span class="badge bg-secondary text-light ultra-small">No Genre</span>';
                                                     }
                                                     ?>
-                                </div>
-                            </div>
-                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                        <div class="text-center text-muted small px-2" style="width: 15%;">
-                            <span class="d-block text-white-50">Studio</span>
-                            <span
-                                class="text-white"><?php echo htmlspecialchars($anime['studio'] ?? 'unknown'); ?></span>
-                        </div>
+                                        <div class="text-center text-muted small px-2" style="width: 15%;">
+                                            <span class="d-block text-white-50">Studio</span>
+                                            <span
+                                                class="text-white"><?php echo htmlspecialchars($anime['studio'] ?? 'unknown'); ?></span>
+                                        </div>
 
-                        <div class="text-center text-muted small px-2" style="width: 10%;">
-                            <span class="d-block text-white-50">Release</span>
-                            <span
-                                class="text-white"><?php echo htmlspecialchars($anime['release_year'] ?? 'N/A'); ?></span>
-                        </div>
+                                        <div class="text-center text-muted small px-2" style="width: 10%;">
+                                            <span class="d-block text-white-50">Release</span>
+                                            <span
+                                                class="text-white"><?php echo htmlspecialchars($anime['release_year'] ?? 'N/A'); ?></span>
+                                        </div>
 
-                        <div class="text-center text-muted small px-2" style="width: 10%;">
-                            <span class="d-block text-white-50">Rating</span>
-                            <span class="text-warning fw-bold"><i
-                                    class="fas fa-star fa-xs me-1"></i><?php echo htmlspecialchars($anime['my_rating']); ?></span>
-                        </div>
+                                        <div class="text-center text-muted small px-2" style="width: 10%;">
+                                            <span class="d-block text-white-50">Rating</span>
+                                            <span class="text-warning fw-bold"><i
+                                                    class="fas fa-star fa-xs me-1"></i><?php echo htmlspecialchars($anime['my_rating']); ?></span>
+                                        </div>
 
-                        <div class="text-center px-2" style="width: 15%;">
-                            <span class="d-block text-muted small text-white-50">Progress</span>
-                            <small class="d-block text-white-50 mt-1">
-                                <span><?php echo htmlspecialchars($anime['current_episode']); ?></span> /
-                                <span><?php echo htmlspecialchars($anime['total_episodes']); ?></span> eps
-                            </small>
-                        </div>
+                                        <div class="text-center px-2" style="width: 15%;">
+                                            <span class="d-block text-muted small text-white-50">Progress</span>
+                                            <small class="d-block text-white-50 mt-1">
+                                                <span><?php echo htmlspecialchars($anime['current_episode']); ?></span> /
+                                                <span><?php echo htmlspecialchars($anime['total_episodes']); ?></span> eps
+                                            </small>
+                                        </div>
 
-                        <div class="text-end px-3" style="width: 15%;">
-                            <button type="button" class="btn btn-sm btn-outline-light me-1 edit-anime-btn"
-                                data-bs-toggle="modal" data-bs-target="#editAnime" data-id="<?php echo $anime['id']; ?>"
-                                data-title="<?php echo htmlspecialchars($anime['title']); ?>"
-                                data-studio="<?php echo htmlspecialchars($anime['studio'] ?? ''); ?>"
-                                data-type="<?php echo $anime['anime_type']; ?>"
-                                data-current="<?php echo $anime['current_episode']; ?>"
-                                data-total="<?php echo $anime['total_episodes']; ?>"
-                                data-release="<?php echo $anime['release_year'] ?? ''; ?>"
-                                data-rating="<?php echo $anime['my_rating'] ?? ''; ?>"
-                                data-status="<?php echo $anime['watch_status']; ?>"
-                                data-cover="<?php echo htmlspecialchars($anime['cover'] ?? ''); ?>" title="Edit Entry">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <a href="delete_anime.php?id=<?= $anime['id']; ?>"
-                                onclick="deleteAnime(<?php echo $anime['id']; ?>)" class="btn btn-sm btn-outline-danger"
-                                title="Delete Entry"><i class="fas fa-trash"></i></a>
-                        </div>
-                    </div>
+                                        <div class="text-end px-3" style="width: 15%;">
+                                            <button type="button" class="btn btn-sm btn-outline-light me-1 edit-anime-btn"
+                                                data-bs-toggle="modal" data-bs-target="#editAnime" data-id="<?php echo $anime['id']; ?>"
+                                                data-title="<?php echo htmlspecialchars($anime['title']); ?>"
+                                                data-studio="<?php echo htmlspecialchars($anime['studio'] ?? ''); ?>"
+                                                data-type="<?php echo $anime['anime_type']; ?>"
+                                                data-current="<?php echo $anime['current_episode']; ?>"
+                                                data-total="<?php echo $anime['total_episodes']; ?>"
+                                                data-release="<?php echo $anime['release_year'] ?? ''; ?>"
+                                                data-rating="<?php echo $anime['my_rating'] ?? ''; ?>"
+                                                data-status="<?php echo $anime['watch_status']; ?>"
+                                                data-cover="<?php echo htmlspecialchars($anime['cover'] ?? ''); ?>" title="Edit Entry">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <a href="delete_anime.php?id=<?= $anime['id']; ?>"
+                                                onclick="deleteAnime(<?php echo $anime['id']; ?>)" class="btn btn-sm btn-outline-danger"
+                                                title="Delete Entry"><i class="fas fa-trash"></i></a>
+                                        </div>
+                                    </div>
                     <?php
                                 }
                             }
@@ -205,15 +205,15 @@ include '../connection/connection.php';
                                             $genreStmt = $pdo->query('SELECT id, name FROM genres ORDER BY name ASC');
                                             while ($genre = $genreStmt->fetch()) {
                                     ?>
-                                    <div class="col-6 col-sm-4">
-                                        <div class="form-check custom-genre-check">
-                                            <input class="form-check-input" type="checkbox" name="genres[]"
-                                                value="<?php echo $genre['id']; ?>"
-                                                id="genre_<?php echo $genre['id']; ?>">
-                                            <label class="form-check-label text-white small"
-                                                for="genre_<?php echo $genre['id']; ?>"><?php echo htmlspecialchars($genre['name']); ?></label>
-                                        </div>
-                                    </div>
+                                                <div class="col-6 col-sm-4">
+                                                    <div class="form-check custom-genre-check">
+                                                        <input class="form-check-input" type="checkbox" name="genres[]"
+                                                            value="<?php echo $genre['id']; ?>"
+                                                            id="genre_<?php echo $genre['id']; ?>">
+                                                        <label class="form-check-label text-white small"
+                                                            for="genre_<?php echo $genre['id']; ?>"><?php echo htmlspecialchars($genre['name']); ?></label>
+                                                    </div>
+                                                </div>
                                     <?php
                                             }
                                         } catch (PDOException $e) {
@@ -345,15 +345,15 @@ include '../connection/connection.php';
                                             $genreStmt = $pdo->query('SELECT id, name FROM genres ORDER BY name ASC');
                                             while ($genre = $genreStmt->fetch()) {
                                     ?>
-                                    <div class="col-6 col-sm-4">
-                                        <div class="form-check custom-genre-check">
-                                            <input class="form-check-input" type="checkbox" name="genres[]"
-                                                value="<?php echo $genre['id']; ?>"
-                                                id="genre_<?php echo $genre['id']; ?>">
-                                            <label class="form-check-label text-white small"
-                                                for="genre_<?php echo $genre['id']; ?>"><?php echo htmlspecialchars($genre['name']); ?></label>
-                                        </div>
-                                    </div>
+                                                <div class="col-6 col-sm-4">
+                                                    <div class="form-check custom-genre-check">
+                                                        <input class="form-check-input" type="checkbox" name="genres[]"
+                                                            value="<?php echo $genre['id']; ?>"
+                                                            id="genre_<?php echo $genre['id']; ?>">
+                                                        <label class="form-check-label text-white small"
+                                                            for="genre_<?php echo $genre['id']; ?>"><?php echo htmlspecialchars($genre['name']); ?></label>
+                                                    </div>
+                                                </div>
                                     <?php
                                             }
                                         } catch (PDOException $e) {
@@ -441,16 +441,16 @@ include '../connection/connection.php';
     </script>
 
     <script>
-    function deleteAnime(id) {
-        if (!confirm("Delete this anime?")) return;
+        function deleteAnime(id) {
+            if (!confirm("Delete this anime?")) return;
 
-        fetch("index.php?delete=" + id)
-            .then(response => response.text())
-            .then(() => {
-                document.getElementById("row-" + id).remove();
-            })
-            .catch(err => console.error(err));
-    }
+            fetch("index.php?delete=" + id)
+                .then(response => response.text())
+                .then(() => {
+                    document.getElementById("row-" + id).remove();
+                })
+                .catch(err => console.error(err));
+        }
     </script>
 
     <script src="../assets/js/main.js"></script>

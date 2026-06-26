@@ -60,7 +60,6 @@ try {
                         $progress_percent = ($total > 0) ? ($current / $total) * 100 : 0;
                         $genre_names = [];
                         try {
-                            // Note: Adjusted schema target key dynamically inside the join framework
                             $genre_stmt = $pdo->prepare("
                                 SELECT g.name 
                                 FROM genres g
@@ -70,7 +69,7 @@ try {
                             $genre_stmt->execute([':anime_id' => $row['id']]);
                             $genre_names = $genre_stmt->fetchAll(PDO::FETCH_COLUMN);
                         } catch (PDOException $e) {
-                            // Fallback array mapping
+                            die("Database Error: " . $e->getMessage());
                         }
                         $genre_display = !empty($genre_names) ? implode(' • ', array_map('htmlspecialchars', $genre_names)) : 'No Genre';
 
@@ -166,8 +165,6 @@ try {
                 const title = card.getAttribute('data-title');
                 const studio = card.getAttribute('data-studio');
                 const genres = card.getAttribute('data-genres');
-
-                // Allows user to search by Title, Studio name, or Genre tags smoothly
                 if (title.includes(query) || studio.includes(query) || genres.includes(query)) {
                     card.classList.remove('d-none');
                     visibleCount++;
@@ -175,8 +172,6 @@ try {
                     card.classList.add('d-none');
                 }
             });
-
-            // Toggle "No matching results found" message if grid filter matches nothing
             if (visibleCount === 0 && query !== '') {
                 noResultsMessage.classList.remove('d-none');
             } else {
